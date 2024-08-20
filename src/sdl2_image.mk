@@ -4,11 +4,9 @@ PKG             := sdl2_image
 $(PKG)_WEBSITE  := https://www.libsdl.org/
 $(PKG)_DESCR    := SDL2_image
 $(PKG)_IGNORE   :=
-$(PKG)_VERSION  := 2.6.3
-$(PKG)_CHECKSUM := 931c9be5bf1d7c8fae9b7dc157828b7eee874e23c7f24b44ba7eff6b4836312c
-$(PKG)_SUBDIR   := SDL2_image-$($(PKG)_VERSION)
-$(PKG)_FILE     := SDL2_image-$($(PKG)_VERSION).tar.gz
-$(PKG)_URL      := https://www.libsdl.org/projects/SDL_image/release/$($(PKG)_FILE)
+$(PKG)_VERSION  := 2.8.2
+$(PKG)_CHECKSUM := 8fd59b2c17772d7ac1192b11c645be8d7874f595c1714f4b200ee70b7cc38f3e
+$(PKG)_GH_CONF  := libsdl-org/SDL_image/releases/tag,release-,,
 $(PKG)_DEPS     := cc libjpeg-turbo libpng libwebp sdl2 tiff
 
 define $(PKG)_BUILD

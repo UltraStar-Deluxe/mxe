@@ -4,11 +4,11 @@ PKG             := lua
 $(PKG)_WEBSITE  := https://www.lua.org/
 $(PKG)_DESCR    := Lua
 $(PKG)_IGNORE   :=
-$(PKG)_VERSION  := 5.4.6
+$(PKG)_VERSION  := 5.4.7
 # Shared version and luarocks subdir
 $(PKG)_SHORTVER := $(call SHORT_PKG_VERSION,$(PKG))
 $(PKG)_DLLVER   := $(subst .,,$($(PKG)_SHORTVER))
-$(PKG)_CHECKSUM := 7d5ea1b9cb6aa0b59ca3dde1c6adcb57ef83a1ba8e5432c0ecd06bf439b3ad88
+$(PKG)_CHECKSUM := 9fbf5e28ef86c69858f6d3d34eccc32e911c1a28b4120ff3e84aaa70cfbf1e30
 $(PKG)_SUBDIR   := lua-$($(PKG)_VERSION)
 $(PKG)_FILE     := lua-$($(PKG)_VERSION).tar.gz
 $(PKG)_URL      := https://www.lua.org/ftp/$($(PKG)_FILE)

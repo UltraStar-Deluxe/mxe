@@ -1,5 +1,5 @@
 diff --git a/sharpyuv/Makefile.am b/sharpyuv/Makefile.am
-index b6b4675..54692d9 100644
+index 1a94d46..9e0ef3e 100644
 --- a/sharpyuv/Makefile.am
 +++ b/sharpyuv/Makefile.am
 @@ -1,9 +1,7 @@
@@ -14,15 +14,15 @@ index b6b4675..54692d9 100644
  noinst_LTLIBRARIES += libsharpyuv_neon.la
  
 diff --git a/src/Makefile.am b/src/Makefile.am
-index b2979fb..3bdc523 100644
+index 1dafadd..8940228 100644
 --- a/src/Makefile.am
 +++ b/src/Makefile.am
 @@ -36,7 +36,7 @@ libwebp_la_LIBADD += utils/libwebputils.la
  # other than the ones listed on the command line, i.e., after linking, it will
  # not have unresolved symbols. Some platforms (Windows among them) require all
  # symbols in shared libraries to be resolved at library creation.
--libwebp_la_LDFLAGS = -no-undefined -version-info 8:8:1
-+libwebp_la_LDFLAGS = -no-undefined -version-info 8:8:1 -XCClinker -static-libgcc
+-libwebp_la_LDFLAGS = -no-undefined -version-info 8:9:1
++libwebp_la_LDFLAGS = -no-undefined -version-info 8:9:1 -XCClinker -static-libgcc
  libwebpincludedir = $(includedir)/webp
  pkgconfig_DATA = libwebp.pc
  

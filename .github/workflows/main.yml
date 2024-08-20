@@ -1,0 +1,53 @@
+name: Build
+
+on: [push, pull_request]
+jobs:
+  build_i686:
+    name: Build for 32 bit x86
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install autopoint gperf intltool libtool-bin lzip python3-mako
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+      - name: Extract Source Hashes
+        run: |
+          fgrep '(PKG)_CHECKSUM' src/*.mk > hashes.txt
+      - name: Cache Downloaded Packages
+        id: cache-pkg
+        uses: actions/cache@v4
+        with:
+          path: pkg
+          key: pkg-${{hashFiles('hashes.txt')}}
+          restore-keys: |
+            pkg-
+      - name: Cache Object Files
+        id: cache-ccache
+        uses: actions/cache@v4
+        with:
+          path: .ccache/ccache
+          key: ccache-${{github.sha}}
+          restore-keys: |
+            ccache-
+      - name: Build
+        run: |
+          mkdir /tmp/mxe
+          sudo mount --bind . /tmp/mxe
+          cd /tmp/mxe
+          ./build.sh
+      - name: Collect Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: usdx-dlls-i686
+          path: DLLs/*
+          if-no-files-found: error
+      - name: Cleanup Download Cache
+        if: ${{ steps.cache-pkg.outputs.cache-hit != 'true' }}
+        run: |
+          find pkg -type f -not -anewer settings.mk -print0 | xargs -r -0 rm -v
+      - name: Cleanup Object File Cache
+        if: ${{ steps.cache-ccache.outputs.cache-hit != 'true' }}
+        run: |
+          find .ccache/ccache -type f -not -anewer settings.mk -not -name ccache.conf -print0 | xargs -r -0 rm

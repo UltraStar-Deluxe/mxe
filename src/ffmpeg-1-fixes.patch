@@ -11,10 +11,10 @@ Subject: [PATCH 2/2] avoid warning: cast from pointer to integer of different
 when checking opus
 
 diff --git a/configure b/configure
-index 1111111..2222222 100755
+index 4f5353f84b..492b3c84a0 100755
 --- a/configure
 +++ b/configure
-@@ -1342,7 +1342,7 @@ check_func_headers(){
+@@ -1390,7 +1390,7 @@ check_func_headers(){
          done
          echo "#include <stdint.h>"
          for func in $funcs; do
@@ -23,15 +23,15 @@ index 1111111..2222222 100755
          done
          echo "int main(void) { int ret = 0;"
          # LTO could optimize out the test functions without this
-@@ -2256,7 +2256,6 @@ SYSTEM_FUNCS="
+@@ -2359,7 +2359,6 @@ SYSTEM_FUNCS="
      access
      aligned_malloc
-     arc4random
+     arc4random_buf
 -    clock_gettime
      closesocket
      CommandLineToArgvW
      fcntl
-@@ -2288,7 +2287,6 @@ SYSTEM_FUNCS="
+@@ -2391,7 +2390,6 @@ SYSTEM_FUNCS="
      mkstemp
      mmap
      mprotect

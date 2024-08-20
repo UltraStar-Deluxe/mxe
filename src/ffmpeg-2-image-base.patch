@@ -1,8 +1,8 @@
 diff --git a/configure b/configure
-index 6ad7529..9d0c329 100755
+index 492b3c84a0..dfa7faf6dd 100755
 --- a/configure
 +++ b/configure
-@@ -5605,12 +5605,13 @@ case $target_os in
+@@ -5799,12 +5799,13 @@ case $target_os in
          SLIB_INSTALL_EXTRA_SHLIB='$(SLIBNAME:$(SLIBSUF)=.lib)'
          SLIB_INSTALL_EXTRA_LIB='lib$(SLIBNAME:$(SLIBSUF)=.dll.a) $(SLIBNAME_WITH_MAJOR:$(SLIBSUF)=.def)'
          SLIB_CREATE_DEF_CMD='EXTERN_PREFIX="$(EXTERN_PREFIX)" AR="$(AR_CMD)" NM="$(NM_CMD)" $(SRC_PATH)/compat/windows/makedef $(SUBDIR)lib$(NAME).ver $(OBJS) > $$(@:$(SLIBSUF)=.def)'
@@ -19,7 +19,7 @@ index 6ad7529..9d0c329 100755
          # ld will strip relocations from executables even though we need them
          # for dynamicbase (ASLR).  Using -pie does retain the reloc section
 diff --git a/libavcodec/x86/Makefile b/libavcodec/x86/Makefile
-index 118daca..4167937 100644
+index 21c5e9b0d4..6c3a508150 100644
 --- a/libavcodec/x86/Makefile
 +++ b/libavcodec/x86/Makefile
 @@ -1,3 +1,6 @@
@@ -30,7 +30,7 @@ index 118daca..4167937 100644
  
  # subsystems
 diff --git a/libswresample/x86/Makefile b/libswresample/x86/Makefile
-index fa0641f..e354bc4 100644
+index fa0641f03f..e354bc491a 100644
 --- a/libswresample/x86/Makefile
 +++ b/libswresample/x86/Makefile
 @@ -1,3 +1,7 @@
@@ -42,7 +42,7 @@ index fa0641f..e354bc4 100644
                                     x86/rematrix.o\
                                     x86/resample.o\
 diff --git a/libswscale/x86/Makefile b/libswscale/x86/Makefile
-index 6839149..f2ba7b5 100644
+index 68391494be..f2ba7b53fc 100644
 --- a/libswscale/x86/Makefile
 +++ b/libswscale/x86/Makefile
 @@ -1,3 +1,7 @@

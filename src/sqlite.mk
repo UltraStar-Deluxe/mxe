@@ -4,11 +4,11 @@ PKG             := sqlite
 $(PKG)_WEBSITE  := https://www.sqlite.org/
 $(PKG)_DESCR    := SQLite
 $(PKG)_IGNORE   :=
-$(PKG)_VERSION  := 3420000
-$(PKG)_CHECKSUM := 7abcfd161c6e2742ca5c6c0895d1f853c940f203304a0b49da4e1eca5d088ca6
+$(PKG)_VERSION  := 3460100
+$(PKG)_CHECKSUM := 67d3fe6d268e6eaddcae3727fce58fcc8e9c53869bdd07a0c61e38ddf2965071
 $(PKG)_SUBDIR   := $(PKG)-autoconf-$($(PKG)_VERSION)
 $(PKG)_FILE     := $(PKG)-autoconf-$($(PKG)_VERSION).tar.gz
-$(PKG)_URL      := https://www.sqlite.org/2023/$($(PKG)_FILE)
+$(PKG)_URL      := https://www.sqlite.org/2024/$($(PKG)_FILE)
 $(PKG)_DEPS     := cc
 
 define $(PKG)_UPDATE
@@ -21,8 +21,7 @@ define $(PKG)_BUILD
     cd '$(1)' && ./configure \
         $(MXE_CONFIGURE_OPTS) \
         --disable-readline \
-        --enable-threadsafe \
-        CFLAGS="-Os -g -DSQLITE_ENABLE_COLUMN_METADATA"
+        CFLAGS="-Os -g -DSQLITE_THREADSAFE=1 -DSQLITE_ENABLE_COLUMN_METADATA"
     $(SED) -i 's:^/\*\+ Begin file \([^ ]\+\) \*\+/:#line 1 "\1":;s:^/\*\+ Continuing where we left off in \([^ ]\+\) \*\+/:#line xxx "\1":' $(1)/sqlite3.c
     grep -n ^#line $(1)/sqlite3.c | $(SED) 's/:#line//;s/"//g;s/\./____/g' | ( \
         fixup="" ; \

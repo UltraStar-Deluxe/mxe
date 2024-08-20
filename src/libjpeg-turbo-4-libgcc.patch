@@ -1,0 +1,12 @@
+diff --git a/sharedlib/CMakeLists.txt b/sharedlib/CMakeLists.txt
+index aea0b9d..4f338a9 100644
+--- a/sharedlib/CMakeLists.txt
++++ b/sharedlib/CMakeLists.txt
+@@ -62,6 +62,7 @@ if(MSVC)
+   # The jsimd_*.c file is built using /MT, so this prevents a linker warning.
+   set_target_properties(jpeg PROPERTIES LINK_FLAGS "/NODEFAULTLIB:LIBCMT /NODEFAULTLIB:LIBCMTD")
+ elseif(MINGW)
++  set_target_properties(jpeg PROPERTIES LINK_FLAGS "-static-libgcc")
+   set_target_properties(jpeg PROPERTIES SUFFIX -${SO_MAJOR_VERSION}.dll)
+ endif()
+ 
