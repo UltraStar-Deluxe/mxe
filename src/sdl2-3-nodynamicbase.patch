@@ -1,8 +1,8 @@
 diff --git a/configure.ac b/configure.ac
-index d3c7236..ed13b98 100644
+index ae78b18f1..1ccfefaed 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -274,7 +274,7 @@ case "$host" in
+@@ -275,7 +275,7 @@ case "$host" in
      *)
          save_LDFLAGS="$LDFLAGS"
          LDFLAGS="$LDFLAGS -Wl,--dynamicbase"

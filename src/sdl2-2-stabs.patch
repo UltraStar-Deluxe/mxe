@@ -8,10 +8,10 @@ Subject: [PATCH] Use stabs debugging info on 32 bit Windows
  1 file changed, 28 insertions(+), 1 deletion(-)
 
 diff --git a/configure.ac b/configure.ac
-index 5f4fd16d8..13c10f8e4 100644
+index d573acd0c..ae78b18f1 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -1514,6 +1514,26 @@ CheckGDwarf4()
+@@ -1530,6 +1530,26 @@ CheckGDwarf4()
      fi
  }
  
@@ -38,7 +38,7 @@ index 5f4fd16d8..13c10f8e4 100644
  dnl See if GCC's -fvisibility=hidden is supported (gcc4 and later, usually).
  dnl  Details of this flag are here: http://gcc.gnu.org/wiki/Visibility
  CheckVisibilityHidden()
-@@ -4021,7 +4041,14 @@ case "$host" in
+@@ -4034,7 +4054,14 @@ case "$host" in
          if test x$enable_loadso = xyes; then
              have_loadso=yes
          fi

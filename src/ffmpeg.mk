@@ -3,12 +3,12 @@
 PKG             := ffmpeg
 $(PKG)_WEBSITE  := https://ffmpeg.org/
 $(PKG)_IGNORE   :=
-$(PKG)_VERSION  := 7.0.2
-$(PKG)_CHECKSUM := 8646515b638a3ad303e23af6a3587734447cb8fc0a0c064ecdb8e95c4fd8b389
+$(PKG)_VERSION  := 8.1.1
+$(PKG)_CHECKSUM := b6863adde98898f42602017462871b5f6333e65aec803fdd7a6308639c52edf3
 $(PKG)_SUBDIR   := $(PKG)-$($(PKG)_VERSION)
 $(PKG)_FILE     := $(PKG)-$($(PKG)_VERSION).tar.xz
 $(PKG)_URL      := https://ffmpeg.org/releases/$($(PKG)_FILE)
-$(PKG)_DEPS     := cc dav1d yasm zlib
+$(PKG)_DEPS     := cc dav1d $(BUILD)~nasm zlib
 
 # DO NOT ADD fdk-aac OR openssl SUPPORT.
 # Although they are free softwares, their licenses are not compatible with
@@ -33,7 +33,7 @@ define $(PKG)_BUILD
         $(if $(BUILD_STATIC), \
             --enable-static --disable-shared , \
             --disable-static --enable-shared ) \
-        --x86asmexe='$(TARGET)-yasm' \
+        --x86asmexe=nasm \
         --enable-debug \
         --disable-stripping \
         --disable-pthreads \
@@ -54,14 +54,13 @@ define $(PKG)_BUILD
         --disable-network \
         --disable-indevs \
         --disable-outdevs \
-        --disable-postproc \
         --disable-muxers \
         --disable-bsfs \
         --disable-filters \
         --disable-protocols \
         --disable-lzma \
         --disable-bzlib \
-        --extra-ldflags="-fstack-protector -static-libgcc" \
+        --extra-ldflags="-fstack-protector" \
         $($(PKG)_CONFIGURE_OPTS)
     $(MAKE) -C '$(BUILD_DIR)' -j '$(JOBS)'
     $(MAKE) -C '$(BUILD_DIR)' -j 1 install

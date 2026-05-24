@@ -4,8 +4,8 @@ PKG             := opencv
 $(PKG)_WEBSITE  := https://opencv.org/
 $(PKG)_DESCR    := OpenCV
 $(PKG)_IGNORE   :=
-$(PKG)_VERSION  := 4.6.0
-$(PKG)_CHECKSUM := 1ec1cba65f9f20fe5a41fda1586e01c70ea0c9a6d7b67c9e13edf0cfe2239277
+$(PKG)_VERSION  := 4.13.0
+$(PKG)_CHECKSUM := 1d40ca017ea51c533cf9fd5cbde5b5fe7ae248291ddf2af99d4c17cf8e13017d
 $(PKG)_GH_CONF  := opencv/opencv/releases
 $(PKG)_DEPS     := cc libjpeg-turbo
 

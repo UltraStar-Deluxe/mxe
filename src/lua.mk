@@ -4,11 +4,11 @@ PKG             := lua
 $(PKG)_WEBSITE  := https://www.lua.org/
 $(PKG)_DESCR    := Lua
 $(PKG)_IGNORE   :=
-$(PKG)_VERSION  := 5.4.7
+$(PKG)_VERSION  := 5.4.8
 # Shared version and luarocks subdir
 $(PKG)_SHORTVER := $(call SHORT_PKG_VERSION,$(PKG))
 $(PKG)_DLLVER   := $(subst .,,$($(PKG)_SHORTVER))
-$(PKG)_CHECKSUM := 9fbf5e28ef86c69858f6d3d34eccc32e911c1a28b4120ff3e84aaa70cfbf1e30
+$(PKG)_CHECKSUM := 4f18ddae154e793e46eeab727c59ef1c0c0c2b744e7b94219710d76f530629ae
 $(PKG)_SUBDIR   := lua-$($(PKG)_VERSION)
 $(PKG)_FILE     := lua-$($(PKG)_VERSION).tar.gz
 $(PKG)_URL      := https://www.lua.org/ftp/$($(PKG)_FILE)
@@ -65,7 +65,7 @@ define $(PKG)_BUILD_SHARED
     $(MAKE) -C '$(1)/src' -j '$(JOBS)' \
         INSTALL_TOP='$(PREFIX)/$(TARGET)' \
         CC='$(TARGET)-gcc -g' \
-        AR='$(TARGET)-gcc -Wl,--out-implib,liblua.dll.a -shared -static-libgcc -o' \
+        AR='$(TARGET)-gcc -Wl,--out-implib,liblua.dll.a -shared -o' \
         RANLIB='echo skipped ranlib' \
         SYSCFLAGS='-DLUA_BUILD_AS_DLL' \
         LUA_A=lua$($(PKG)_DLLVER).dll \

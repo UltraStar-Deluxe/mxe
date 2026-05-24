@@ -58,7 +58,7 @@ add_dll() {
 		fi
 	)
 }
-for i in avcodec-61 avformat-61 avutil-59 swresample-5 swscale-8 libdav1d libjpeg-8 libpng16-16 libtiff-6 libwebp-7 SDL2 SDL2_image zlib1 lua54:lua libsqlite3-0:sqlite3 libfreetype-6 libportaudio-2:$PORTAUDIO_NAME libbz2 libdl libgcc_s_seh-1 libstdc++-6 libwinpthread-1; do
+for i in avcodec-62 avformat-62 avutil-60 swresample-6 swscale-9 libdav1d libjpeg-8 libpng16-16 libtiff-6 libwebp-7 libsharpyuv-0 SDL2 SDL2_image zlib1 lua54 libsqlite3-0:sqlite3 libfreetype-6 libportaudio-2:$PORTAUDIO_NAME libbz2 libdl libgcc_s_seh-1 libstdc++-6 libwinpthread-1; do
 	j=${i##*:}
 	i=${i%%:*}
 	DLL_PATH="$MXE/usr/$TARGET/bin/$i.dll"
@@ -70,3 +70,5 @@ for dll in "$MXE/usr/$TARGET/bin"/opencv_*.dll "$MXE/usr/$TARGET/bin"/libopencv_
 	base=$(basename "$dll" .dll)
 	add_dll "$dll" "$base"
 done
+
+$MXE/makeconfig.sh $MXE $TARGET > $DLL_DIR/config-win.inc

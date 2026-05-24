@@ -1,8 +1,8 @@
 diff --git a/meson.build b/meson.build
-index 2e2974d..b6791fb 100644
+index 2168b6a..0ebd0d7 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -109,13 +109,13 @@ if host_machine.system() == 'windows'
+@@ -122,13 +122,13 @@ if host_machine.system() == 'windows'
  
      if host_machine.cpu_family() == 'x86_64'
          if cc.get_argument_syntax() != 'msvc'

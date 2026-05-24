@@ -9,10 +9,10 @@ Subject: [PATCH 1/1] MinGW build fixes
 
 
 diff --git a/cmake/OpenCVCompilerOptions.cmake b/cmake/OpenCVCompilerOptions.cmake
-index 1111111..2222222 100644
+index 512e6d1abd..d4d088ac47 100644
 --- a/cmake/OpenCVCompilerOptions.cmake
 +++ b/cmake/OpenCVCompilerOptions.cmake
-@@ -126,8 +126,6 @@ if(CV_GCC OR CV_CLANG)
+@@ -144,8 +144,6 @@ if(CV_GCC OR CV_CLANG OR CV_ICX)
    add_extra_compiler_option(-Wformat)
    add_extra_compiler_option(-Wformat-security -Wformat)
    add_extra_compiler_option(-Wmissing-declarations)
@@ -22,7 +22,7 @@ index 1111111..2222222 100644
    add_extra_compiler_option(-Winit-self)
    add_extra_compiler_option(-Wpointer-arith)
 diff --git a/cmake/OpenCVFindLibsGrfmt.cmake b/cmake/OpenCVFindLibsGrfmt.cmake
-index 1111111..2222222 100644
+index c3c358f6fc..9139d10494 100644
 --- a/cmake/OpenCVFindLibsGrfmt.cmake
 +++ b/cmake/OpenCVFindLibsGrfmt.cmake
 @@ -2,6 +2,11 @@
@@ -35,10 +35,10 @@ index 1111111..2222222 100644
 +endif()
 +
  # --- zlib (required) ---
- if(BUILD_ZLIB)
-   ocv_clear_vars(ZLIB_FOUND)
+ if(WITH_ZLIB_NG)
+   ocv_clear_vars(ZLIB_LIBRARY ZLIB_LIBRARIES ZLIB_INCLUDE_DIR)
 diff --git a/cmake/OpenCVFindLibsVideo.cmake b/cmake/OpenCVFindLibsVideo.cmake
-index 1111111..2222222 100644
+index a4e52e13cf..fd998147d6 100644
 --- a/cmake/OpenCVFindLibsVideo.cmake
 +++ b/cmake/OpenCVFindLibsVideo.cmake
 @@ -1,6 +1,6 @@
@@ -50,10 +50,10 @@ index 1111111..2222222 100644
  
  if(WITH_VA)
 diff --git a/cmake/OpenCVModule.cmake b/cmake/OpenCVModule.cmake
-index 1111111..2222222 100644
+index 84e8216fe0..e56ea45d82 100644
 --- a/cmake/OpenCVModule.cmake
 +++ b/cmake/OpenCVModule.cmake
-@@ -602,12 +602,16 @@ function(__ocv_resolve_dependencies)
+@@ -625,12 +625,16 @@ function(__ocv_resolve_dependencies)
    # process private deps
    foreach(m ${OPENCV_MODULES_BUILD})
      foreach(d ${OPENCV_MODULE_${m}_PRIVATE_REQ_DEPS})
@@ -73,10 +73,10 @@ index 1111111..2222222 100644
            list(APPEND deps_${m} ${d})
          endif()
 diff --git a/modules/core/src/lapack.cpp b/modules/core/src/lapack.cpp
-index 1111111..2222222 100644
+index 83adeeabc3..9ba5b1cb07 100644
 --- a/modules/core/src/lapack.cpp
 +++ b/modules/core/src/lapack.cpp
-@@ -628,7 +628,7 @@ void hal::SVD32f(float* At, size_t astep, float* W, float* U, size_t ustep, floa
+@@ -578,7 +578,7 @@ void hal::SVD32f(float* At, size_t astep, float* W, float* U, size_t ustep, floa
  void hal::SVD64f(double* At, size_t astep, double* W, double* U, size_t ustep, double* Vt, size_t vstep, int m, int n, int n1)
  {
      CALL_HAL(SVD64f, cv_hal_SVD64f, At, astep, W, U, ustep, Vt, vstep, m, n, decodeSVDParameters(U, Vt, m, n, n1))
@@ -86,7 +86,7 @@ index 1111111..2222222 100644
  
  /* y[0:m,0:n] += diag(a[0:1,0:m]) * x[0:m,0:n] */
 diff --git a/modules/core/src/precomp.hpp b/modules/core/src/precomp.hpp
-index 1111111..2222222 100644
+index 1b0945d412..e6845060f7 100644
 --- a/modules/core/src/precomp.hpp
 +++ b/modules/core/src/precomp.hpp
 @@ -63,7 +63,7 @@
@@ -99,10 +99,10 @@ index 1111111..2222222 100644
  #include <math.h>
  #include <stdarg.h>
 diff --git a/modules/dnn/CMakeLists.txt b/modules/dnn/CMakeLists.txt
-index 1111111..2222222 100644
+index 641beb71ad..e1bc2394cf 100644
 --- a/modules/dnn/CMakeLists.txt
 +++ b/modules/dnn/CMakeLists.txt
-@@ -67,7 +67,7 @@ if(MSVC)
+@@ -73,7 +73,7 @@ if(MSVC)
      ocv_warnings_disable(CMAKE_CXX_FLAGS /wd4592)  # symbol will be dynamically initialized (implementation limitation)
    endif()
  else()
