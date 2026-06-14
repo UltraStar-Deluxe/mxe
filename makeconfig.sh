@@ -105,7 +105,7 @@ pkg_version libswresample LIBSWRESAMPLE_VERSION
 sw__scale=$(get_dll sws_scale $(pkg_libs libswscale))
 pkg_version libswscale LIBSWSCALE_VERSION
 
-pkg_version libprojectM PROJECTM_VERSION
+pkg_version projectM-4 PROJECTM_VERSION
 pkg_version portaudio-2.0 PORTAUDIO_VERSION
 
 # Works for all FFmpeg version supported by current USDX

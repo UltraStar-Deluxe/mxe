@@ -28,15 +28,12 @@ fetch_wrapper() {
 mkdir -p src/opencvwrapper src/projectm-cwrapper
 fetch_wrapper "$USDX_RAW_BASE/src/lib/openCV3/ApiWrapper.cpp" \
 	"src/opencvwrapper/opencv-wrapper.cpp"
-fetch_wrapper "$USDX_RAW_BASE/src/lib/projectM/cwrapper/projectM-cwrapper.cpp" \
-	"src/projectm-cwrapper/projectM-cwrapper.cpp"
-fetch_wrapper "$USDX_RAW_BASE/src/lib/projectM/cwrapper/projectM-cwrapper.h" \
-	"src/projectm-cwrapper/projectM-cwrapper.h"
+
 # Force DWARF debug info and assume .loc support to avoid stabs on x86_64.
 make MXE_TARGETS=$TARGET \
 	CFLAGS_FOR_TARGET='-O2 -gdwarf-2 -gas-loc-support' \
 	CXXFLAGS_FOR_TARGET='-O2 -gdwarf-2 -gas-loc-support' \
-	ffmpeg sdl2_image freetype-bootstrap portaudio sqlite lua opencv opencvwrapper projectm projectm-cwrapper
+	ffmpeg sdl2_image freetype-bootstrap portaudio sqlite lua opencv opencvwrapper projectm
 mkdir -p $DLL_DIR
 OBJ_COPY="$MXE/usr/bin/$TARGET-objcopy"
 add_dll() {
@@ -58,7 +55,7 @@ add_dll() {
 		fi
 	)
 }
-for i in avcodec-62 avformat-62 avutil-60 swresample-6 swscale-9 libdav1d libjpeg-8 libpng16-16 libtiff-6 libwebp-7 libsharpyuv-0 SDL2 SDL2_image zlib1 lua54 libsqlite3-0:sqlite3 libfreetype-6 libportaudio-2:$PORTAUDIO_NAME libbz2 libdl libgcc_s_seh-1 libstdc++-6 libwinpthread-1; do
+for i in avcodec-62 avformat-62 avutil-60 swresample-6 swscale-9 libdav1d libjpeg-8 libpng16-16 libtiff-6 libwebp-7 libsharpyuv-0 SDL2 SDL2_image zlib1 lua54 libsqlite3-0:sqlite3 libfreetype-6 libportaudio-2:$PORTAUDIO_NAME libbz2 libdl libgcc_s_seh-1 libstdc++-6 libwinpthread-1 projectM-4; do
 	j=${i##*:}
 	i=${i%%:*}
 	DLL_PATH="$MXE/usr/$TARGET/bin/$i.dll"
@@ -66,7 +63,7 @@ for i in avcodec-62 avformat-62 avutil-60 swresample-6 swscale-9 libdav1d libjpe
 done
 
 # Add OpenCV and wrapper DLL(s) if present.
-for dll in "$MXE/usr/$TARGET/bin"/opencv_*.dll "$MXE/usr/$TARGET/bin"/libopencv_*.dll "$MXE/usr/$TARGET/bin"/opencvwrapper.dll "$MXE/usr/$TARGET/bin"/libprojectM*.dll "$MXE/usr/$TARGET/bin"/projectM-cwrapper.dll; do
+for dll in "$MXE/usr/$TARGET/bin"/opencv_*.dll "$MXE/usr/$TARGET/bin"/libopencv_*.dll "$MXE/usr/$TARGET/bin"/opencvwrapper.dll; do
 	base=$(basename "$dll" .dll)
 	add_dll "$dll" "$base"
 done
