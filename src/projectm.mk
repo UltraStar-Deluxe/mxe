@@ -4,26 +4,20 @@ PKG             := projectm
 $(PKG)_WEBSITE  := https://github.com/projectM-visualizer/projectm
 $(PKG)_DESCR    := projectM
 $(PKG)_IGNORE   :=
-$(PKG)_VERSION  := 2.2.1
-$(PKG)_CHECKSUM := 9bbb33c5ba048537e97ea5ba2bd9fef76972c881597599a272b0194ec1d5f2a3
-$(PKG)_SUBDIR   := projectM-$($(PKG)_VERSION)
-$(PKG)_FILE     := projectM-$($(PKG)_VERSION).tar.gz
-$(PKG)_URL      := https://github.com/projectM-visualizer/projectm/releases/download/v$($(PKG)_VERSION)/$($(PKG)_FILE)
-$(PKG)_PATCHES  := $(realpath $(sort $(wildcard $(addsuffix /projectm-[0-9]*.patch, $(TOP_DIR)/src))))
-$(PKG)_DEPS     := cc zlib libpng libjpeg-turbo freetype-bootstrap dlfcn-win32
+$(PKG)_VERSION  := 4.1.6
+$(PKG)_SHA := 4d2849333b63235a6af4d1f02508a97529d96dc7
+$(PKG)_CHECKSUM := 218e1e5042ae4caaf7b17497722e9a04b4844444a6e2844f58ddce0c805043ea
+$(PKG)_URL := https://github.com/projectM-visualizer/projectm/archive/$($(PKG)_SHA).tar.gz
+$(PKG)_SUBDIR   := projectm-$($(PKG)_SHA)
+$(PKG)_FILE     := libprojectM-$($(PKG)_VERSION).tar.gz
+$(PKG)_DEPS     := cc projectm-eval
 
 define $(PKG)_BUILD
-    cd '$(1)' && autoreconf -fi
-    cd '$(1)' && ./configure \
-        $(MXE_CONFIGURE_OPTS) \
-        --disable-sdl \
-        --disable-qt \
-        --disable-ftgl
-    $(MAKE) -C '$(1)' -j '$(JOBS)' install bin_PROGRAMS= sbin_PROGRAMS= noinst_PROGRAMS=
-
-    # Windows convention: DLLs in bin/, not in lib/.
-    $(if $(BUILD_SHARED), \
-        mv -fv '$(PREFIX)/$(TARGET)/lib/'libprojectM*.dll '$(PREFIX)/$(TARGET)/bin/' 2>/dev/null || true, \
-				true
-			fi)
+    cp -r $(PREFIX)/$(TARGET)/share/projectm-eval '$(1)/vendor'
+    cd '$(1)'
+    $(TARGET)-cmake -S '$(1)' -B '$(1)/build' -DENABLE_PLAYLIST=OFF
+    $(MAKE) -C '$(1)/build' -j '$(JOBS)' $(MXE_DISABLE_CRUFT) install
+    echo -e 'Name: projectM-4\nVersion: $($(PKG)_VERSION)\nDescription: projectM Music Visualizer' > '$(1)/projectM-4.pc'
+    mv '$(PREFIX)/$(TARGET)/bin/libprojectM-4.dll' '$(PREFIX)/$(TARGET)/bin/projectM-4.dll'
+    $(INSTALL) '$(1)/projectM-4.pc' '$(PREFIX)/$(TARGET)/lib/pkgconfig'
 endef
